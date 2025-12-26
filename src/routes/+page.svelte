@@ -271,6 +271,7 @@
 		gap: 20px;
 		animation: s-y_bCXRrkrYfP-fadeIn 0.5s ease;
 		align-items: center;
+		justify-content: center;
 	}
 
 	.saved-items-section {
