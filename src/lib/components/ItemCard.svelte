@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createSavedItems, deleteSavedItems } from '$lib/db/savedItems.remote';
+	import { createSavedItems, deleteSavedItems, getAllSavedItems } from '$lib/db/savedItems.remote';
 
 	const { core, savedSlugs } = $props();
 
@@ -48,7 +48,16 @@
 	<div class="flex-box">
 		<h1 class="title">{itemData.name}</h1>
 		{#if !liked}
-			<form {...createSavedItems}>
+			<form
+				{...createSavedItems.enhance(async ({ submit }) => {
+					liked = true; // Optimistic update
+					try {
+						await submit().updates(getAllSavedItems());
+					} catch (error) {
+						liked = false; // Revert on error
+					}
+				})}
+			>
 				<input type="hidden" name="slug" value={core.core.slug} />
 				<button
 					class="pin"
@@ -60,7 +69,16 @@
 				</button>
 			</form>
 		{:else}
-			<form {...deleteSavedItems}>
+			<form
+				{...deleteSavedItems.enhance(async ({ submit }) => {
+					liked = false; // Optimistic update
+					try {
+						await submit().updates(getAllSavedItems());
+					} catch (error) {
+						liked = true; // Revert on error
+					}
+				})}
+			>
 				<input type="hidden" name="slug" value={core.core.slug} />
 				<button
 					class="pin"

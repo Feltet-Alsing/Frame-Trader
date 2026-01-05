@@ -37,6 +37,10 @@ export const createSavedItems = form(savedItemSchema, async (data: { slug: strin
 		VALUES (${data.slug})
 		RETURNING *
 	`;
+
+    // Refresh the getAllSavedItems query to keep UI in sync
+    await getAllSavedItems().refresh();
+
     return { success: true, data: record };
 });
 
@@ -46,5 +50,9 @@ export const deleteSavedItems = form(savedItemSchema, async (data: { slug: strin
 		DELETE FROM saveditems
 		WHERE slug = ${data.slug}
 	`;
+
+    // Refresh the getAllSavedItems query to keep UI in sync
+    await getAllSavedItems().refresh();
+
     return { success: true };
 });
