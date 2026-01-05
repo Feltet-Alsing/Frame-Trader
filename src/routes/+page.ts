@@ -1,5 +1,5 @@
 import { getAllItems } from '$lib/db/items.remote';
-import { getAllSavedItems } from '$lib/db/entities.remote';
+import { getAllSavedItems } from '$lib/db/savedItems.remote';
 
 export async function load() {
     const [fetchedItems, savedItems] = await Promise.all([

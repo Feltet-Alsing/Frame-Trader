@@ -6,7 +6,7 @@
 	import LiveOrdersTable from '$lib/components/LiveOrdersTable.svelte';
 	import MarketActivity from '$lib/components/MarketActivity.svelte';
 	import { getItems } from '$lib/db/items.remote';
-	import { getAllSavedItems } from '$lib/db/entities.remote';
+	import { getAllSavedItems } from '$lib/db/savedItems.remote';
 
 	const responsePromise = getItems(page.params.slug ?? '');
 	const savedItemsPromise = getAllSavedItems();

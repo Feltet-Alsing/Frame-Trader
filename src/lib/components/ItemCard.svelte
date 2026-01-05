@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { createSavedItems, deleteSavedItems, getSavedItems } from '$lib/db/entities.remote';
+	import { createSavedItems, deleteSavedItems } from '$lib/db/savedItems.remote';
 
 	const { core, savedSlugs } = $props();
 
 	const itemData = $derived(core.core.i18n.en);
 
-	let item = $derived((await getSavedItems(core.core.slug)) ?? '');
+	let liked = $state(false);
 
-	const isLiked = $derived(item.slug !== undefined);
-
-	let liked = $state(isLiked);
+	$effect(() => {
+		liked = savedSlugs.has(core.core.slug);
+	});
 
 	// Check if item is part of a set (prime parts, blueprints, components)
 	const isSetItem = $derived.by(() => {
@@ -47,7 +47,7 @@
 	</div>
 	<div class="flex-box">
 		<h1 class="title">{itemData.name}</h1>
-		{#if !isLiked}
+		{#if !liked}
 			<form {...createSavedItems}>
 				<input type="hidden" name="slug" value={core.core.slug} />
 				<button

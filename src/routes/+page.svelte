@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ThumbNail from '$lib/components/ThumbNail.svelte';
-	import { getAllSavedItems } from '$lib/db/entities.remote.js';
+	import { getAllSavedItems } from '$lib/db/savedItems.remote';
 	import { getItems } from '$lib/db/items.remote';
 
 	const { data } = $props();
