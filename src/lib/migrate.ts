@@ -36,6 +36,14 @@ async function migrate() {
 		await sql.unsafe(migration_002_users_sql);
 		console.log('✓ Migration 002.users.sql completed');
 
+		// 003.sessions.sql
+		const migration_003_sessions_sql = await readFile(
+			join(__dirname, 'migrations', '003.sessions.sql'),
+			'utf-8'
+		);
+		await sql.unsafe(migration_003_sessions_sql);
+		console.log('✓ Migration 003.sessions.sql completed');
+
 		await sql.end();
 		console.log('\n✓ All migrations completed');
 	} catch (error) {

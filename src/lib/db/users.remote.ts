@@ -1,7 +1,8 @@
 import { form } from "$app/server";
-import { error, redirect } from "@sveltejs/kit";
+import { error } from "@sveltejs/kit";
 import sql from "$lib/db";
 import { z } from "zod";
+import { randomBytes } from "crypto";
 
 export interface User {
     id?: number;
@@ -37,6 +38,6 @@ export const login = form(userSchema, async ({ username, password }) => {
         error(401, 'Invalid credentials');
     }
 
-    // Redirect to home page on successful login
-    redirect(303, '/');
+    console.log(user);
+    return user;
 });
